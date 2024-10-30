@@ -49,13 +49,18 @@
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
+      // Dark mode is set in local storage, which shall not be overwritten
+      var localStorageDarkModeExists =
+        localStorage.getItem(darkModeStateKey) != null;
+      if (localStorageDarkModeExists) {
+        return;
+      }
+
       isDark = event.matches ? true : false;
       if (isDark) {
         document.documentElement.classList.add("dark");
-        localStorage.setItem(darkModeStateKey, true);
       } else {
         document.documentElement.classList.remove("dark");
-        localStorage.setItem(darkModeStateKey, false);
       }
     });
 
